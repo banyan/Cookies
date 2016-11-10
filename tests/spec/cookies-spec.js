@@ -434,6 +434,13 @@ describe('UNIT TESTS', function () {
                 var options = { secure: true };
                 expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;secure');
             });
+
+            it('uses converter function when `options.convert` is given', function () {
+                var options = { convert: function(value) { return encodeURIComponent(value) } };
+                key = '#$%&+^`|';
+                value = '#$&+/:<=>?@[]^`{|}~%';
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('%23%24%25%26%2B%5E%60%7C=%23%24%26%2B%2F%3A%3C%3D%3E%3F%40%5B%5D%5E%60%7B%7C%7D~%25');
+            });
         });
         
         describe('Cookies._getCacheFromString(documentCookie)', function () {
